@@ -15,11 +15,16 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService)
+    {
         this.userService = userService;
     }
-
     @GetMapping("/user")
+    public UserEntity getUserById(@RequestParam Integer id) {
+        return userService.getUserById(id);
+    }
+
+    @GetMapping("/users")
     public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
