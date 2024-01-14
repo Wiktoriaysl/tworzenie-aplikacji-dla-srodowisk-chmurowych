@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 import java.util.List;
@@ -84,30 +85,54 @@ public class UserController {
 
         return new ResponseEntity<>(userId, status);
     }
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @GetMapping("/users/export")
+//    public void exportToCSV(HttpServletResponse response) throws IOException {
+//        response.setContentType("text/csv");
+//        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+//        String currentDateTime = dateFormatter.format(new Date());
+//
+//        String headerKey = "Content-Disposition";
+//        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+//        response.setHeader(headerKey, headerValue);
+//
+//        List <UserEntity> listUsers = userService.getAllUsers();
+//
+//        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+//        String[] csvHeader = {"Name", "E-mail", "Status"};
+//        String[] nameMapping = {"name", "email", "status"};
+//
+//        csvWriter.writeHeader(csvHeader);
+//
+//        for (UserEntity user : listUsers) {
+//            csvWriter.write(user, nameMapping);
+//        }
+//
+//        csvWriter.close();
+//    }
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/users/export")
     public void exportToCSV(HttpServletResponse response) throws IOException {
-        response.setContentType("text/csv");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        String currentDateTime = dateFormatter.format(new Date());
+    response.setContentType("text/csv");
+    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    String currentDateTime = dateFormatter.format(new Date());
 
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
-        response.setHeader(headerKey, headerValue);
+    String headerKey = "Content-Disposition";
+    String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+    response.setHeader(headerKey, headerValue);
 
-        List <UserEntity> listUsers = userService.getAllUsers();
+    List <UserEntity> listUsers = userService.getAllUsers();
 
-        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-        String[] csvHeader = {"Name", "E-mail", "Status"};
-        String[] nameMapping = {"name", "email", "status"};
+    ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+    String[] csvHeader = {"Name", "E-mail", "Status"};
+    String[] nameMapping = {"name", "email", "status"};
 
-        csvWriter.writeHeader(csvHeader);
+    csvWriter.writeHeader(csvHeader);
 
-        for (UserEntity user : listUsers) {
-            csvWriter.write(user, nameMapping);
-        }
-
-        csvWriter.close();
+    for (UserEntity user : listUsers) {
+        csvWriter.write(user, nameMapping);
     }
 
+    csvWriter.close();
+    }
 }
