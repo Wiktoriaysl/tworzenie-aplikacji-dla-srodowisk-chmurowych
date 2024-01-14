@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import UserRow from "./components/UserRow";
+import UserRow from "./components/NewRow";
 import NewUser from "./components/NewUser";
 
 function App() {
