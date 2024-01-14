@@ -1,23 +1,27 @@
 package com.example.backend.controller;
 
+import com.example.backend.model.User;
 import com.example.backend.persistence.UserEntity;
 import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
     UserService userService;
@@ -79,6 +83,31 @@ public class UserController {
         }
 
         return new ResponseEntity<>(userId, status);
+    }
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/users/export")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+
+        List <UserEntity> listUsers = userService.getAllUsers();
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Name", "E-mail", "Status"};
+        String[] nameMapping = {"name", "email", "status"};
+
+        csvWriter.writeHeader(csvHeader);
+
+        for (UserEntity user : listUsers) {
+            csvWriter.write(user, nameMapping);
+        }
+
+        csvWriter.close();
     }
 
 }
