@@ -117,3 +117,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Temporary env files
+/front/public/env-config.js
+front/env-config.js
+

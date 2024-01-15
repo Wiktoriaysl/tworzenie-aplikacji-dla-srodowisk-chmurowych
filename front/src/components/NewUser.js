@@ -11,7 +11,7 @@ export default function UserRow(probs) {
     e.preventDefault();
     let newUser = { name: name, email: email, status: status };
 
-    fetch("http://127.0.0.1:8080/create-user", {
+    fetch(window._env_.REACT_APP_API_URL + "/create-user", {
       method: "POST",
       body: JSON.stringify(newUser),
     })

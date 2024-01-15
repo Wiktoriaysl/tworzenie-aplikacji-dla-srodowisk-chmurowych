@@ -28,6 +28,26 @@
   color: #61dafb;
 }
 
+.User {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.NewUser {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 2%;
+}
+
+.InputBox {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

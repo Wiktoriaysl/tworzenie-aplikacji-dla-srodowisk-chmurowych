@@ -16,7 +16,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import jakarta.servlet.http.HttpServletResponse;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,19 +33,19 @@ public class UserController {
     {
         this.userService = userService;
     }
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin()
     @GetMapping("/user")
     public UserEntity getUserById(@RequestParam Integer id){
         return userService.getUserById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin()
     @GetMapping("/users")
     public List<UserEntity> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin()
     @PostMapping("create-user")
     public ResponseEntity<Integer> addUser(HttpEntity<String> httpEntity){
         Optional<UserEntity> insertionSuccess = userService.insertNewUser(httpEntity);
@@ -58,7 +59,7 @@ public class UserController {
         return new ResponseEntity<>(userId, status);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin()
     @PutMapping("update-user")
     public ResponseEntity<Integer> updateUser(@RequestParam Integer id, HttpEntity<String> httpEntity){
         Optional<UserEntity> insertionSuccess = userService.updateUser(id, httpEntity);
@@ -72,7 +73,7 @@ public class UserController {
         return new ResponseEntity<>(userId, status);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin()
     @DeleteMapping("delete-user")
     public ResponseEntity<Integer> deleteUser(@RequestParam Integer id){
         Optional<UserEntity> deletionSuccess = userService.deleteUser(id);
@@ -85,32 +86,8 @@ public class UserController {
 
         return new ResponseEntity<>(userId, status);
     }
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @GetMapping("/users/export")
-//    public void exportToCSV(HttpServletResponse response) throws IOException {
-//        response.setContentType("text/csv");
-//        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-//        String currentDateTime = dateFormatter.format(new Date());
-//
-//        String headerKey = "Content-Disposition";
-//        String headerValue = "attachment; filename=users_" + currentDateTime + ".csv";
-//        response.setHeader(headerKey, headerValue);
-//
-//        List <UserEntity> listUsers = userService.getAllUsers();
-//
-//        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-//        String[] csvHeader = {"Name", "E-mail", "Status"};
-//        String[] nameMapping = {"name", "email", "status"};
-//
-//        csvWriter.writeHeader(csvHeader);
-//
-//        for (UserEntity user : listUsers) {
-//            csvWriter.write(user, nameMapping);
-//        }
-//
-//        csvWriter.close();
-//    }
-    @CrossOrigin(origins = "http://localhost:3000")
+
+    @CrossOrigin()
     @GetMapping("/users/export")
     public void exportToCSV(HttpServletResponse response) throws IOException {
     response.setContentType("text/csv");
@@ -134,5 +111,16 @@ public class UserController {
     }
 
     csvWriter.close();
+    }
+
+    @GetMapping("/HealthCheck")
+    public void healthCheck(HttpServletResponse response) {
+        try {
+            userService.getAllUsers();
+            response.setStatus(200);
+        }
+        catch (Exception exception) {
+            response.setStatus(500);
+        }
     }
 }
