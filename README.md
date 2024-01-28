@@ -1,5 +1,13 @@
 # Tworzenie aplikacji dla środowisk chmurowych
 
+## Temat projketu:
+
+Aplikacja typu CRUD do zarządzania listą uzytkowników
+
+## Autor:
+
+Wiktoria Szendzielorz, numer indeksu: 38012
+
 ## Technologie:
 
 |Element:| Technologia|
@@ -10,7 +18,7 @@
 
 ## Uruchomienie:
 
-Projekt trzeba uruchomić za pomocą komendy `docker-compose up`, a następnie wejść na adres `http://localhost:3003`
+Projekt trzeba uruchomić za pomocą komendy `docker compose up`, a następnie wejść na adres `http://localhost:3003`
 
 ## Funkcjonalności API:
 
