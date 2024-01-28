@@ -18,7 +18,8 @@ Wiktoria Szendzielorz, numer indeksu: 38012
 
 ## Uruchomienie:
 
-Projekt trzeba uruchomić za pomocą komendy `docker compose up`, a następnie wejść na adres `http://localhost:3003`
+Projekt trzeba uruchomić za pomocą komendy `docker compose up`, a następnie wejść na adres `http://localhost:3003`.
+API dostępne jest pod adresem `http://localhost:8083`
 
 ## Funkcjonalności API:
 
